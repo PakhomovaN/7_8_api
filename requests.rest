@@ -1,4 +1,8 @@
-@host = http://localhost:9999
+# @host = http://localhost:9999
+
+###
+
+@host = https://api-7-8.herokuapp.com
 
 ###
 
