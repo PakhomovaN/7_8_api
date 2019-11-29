@@ -1,24 +1,28 @@
 const express = require('express');
 const cors = require('cors');
 
-const errorNotFound = {error: 'id.not_found'};
-
-let nextId = 1;
-let posts = [
-    {id: nextId++, content: 'First post', likes: 0},
-    {id: nextId++, content: 'Second post', likes: 0},
-];
-
 const server = express();
 server.use(express.json());
 server.use(cors());
+
+const errorNotFound = {error: 'id.not_found'};
+
+const posts = [];
+let nextId = 1;
 
 function findPostIndexById(id) {
     return posts.findIndex(o => o.id === id);
 }
 
-server.get('/posts', (req, res) => {
-    res.send(posts);
+server.get('/posts/:lastSeenId', (req, res) => {
+    const lastSeenId = Number(req.params.lastSeenId);
+
+    if (lastSeenId === 0) {
+        res.send(posts.slice(posts.length - 5));
+        return;
+    }
+
+    res.send(posts.slice(index, index + 5));
 });
 
 server.post('/posts', (req, res) => {
@@ -37,6 +41,14 @@ server.post('/posts', (req, res) => {
 
     posts = posts.map(o => o.id !== id ? o : {...o, content: body.content});
     res.status(posts);
+
+    setTimeout(() => {
+        posts.push({
+            id: nextId++,
+            content
+        });
+        res.status(204).end();
+    }, 5000);
 });
 
 server.delete('/posts/:id', (req, res) => {
