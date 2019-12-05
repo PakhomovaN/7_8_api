@@ -5,8 +5,8 @@ const errorNotFound = {error: 'id.not_found'};
 
 let nextId = 1;
 let posts = [
-    {id: nextId++, content: 'First post', likes: 0},
-    {id: nextId++, content: 'Second post', likes: 0},
+    {id: nextId++, content: 'First post', type: 'Обычный', likes: 0},
+    {id: nextId++, content: 'Second post', type: 'Обычный', likes: 0},
 ];
 
 const server = express();
