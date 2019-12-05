@@ -25,7 +25,7 @@ server.post('/posts', (req, res) => {
     const body = req.body;
     const id = body.id;
     if (id === 0) {
-        posts = [...posts, {id: nextId++, content: body.content, likes: 0}];
+        posts = [...posts, {id: nextId++, content: body.content, type: body.type, likes: 0}];
         res.send(posts);
         return;
     }
